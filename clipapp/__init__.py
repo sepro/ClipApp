@@ -1,0 +1,1 @@
+from .clipapp import ClipApp
