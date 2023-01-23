@@ -33,6 +33,20 @@ From the "File" menu, select "Open" to change the folder containing the images.
 
 Select "Exit" to close the app.
 
+## Development
+
+Install the requirements:
+
+```bash
+pip install -r requirements.txt
+```
+
+Building executable using Nuitka
+
+```bash
+nuitka --standalone --windows-disable-console --enable-plugin=tk-inter --onefile app.py
+```
+
 ## Notes
 
 ClipApp only considers the images with the following extensions: .jpg, .jpeg, .png, .gif and, .bmp.
