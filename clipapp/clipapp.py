@@ -18,7 +18,7 @@ def image_to_text_path(image_path: str) -> str:
 class ClipApp:
     def __init__(self):
         self.root = tk.Tk()
-        self.root.geometry("768x900")
+        self.root.geometry("768x950")
         self.image_handler = ImagesHandler()
         self.text_handler = None
 
@@ -37,25 +37,26 @@ class ClipApp:
 
         # Creating navigate button
         previous_button = tk.Button(middle_frame, text="Previous", command=self.previous_button_handler)
-        previous_button.grid(row=1, column=0, sticky="ew")
+        previous_button.grid(row=1, column=0, sticky="ewns")
 
         next_button = tk.Button(middle_frame, text="Next", command=self.next_button_handler)
-        next_button.grid(row=1, column=9, sticky="ew")
+        next_button.grid(row=1, column=9, sticky="ewns")
 
         # Creating Text Box
-        self.text_box = tk.Entry(middle_frame)
+        self.text_box = tk.Text(middle_frame, wrap=tk.WORD)
+        self.text_box.config(height=3, width=50)
         self.text_box.grid(row=1, column=1, columnspan=6, sticky="ewns")
 
         # Creating Ok button
         ok_button = tk.Button(middle_frame, text="OK", command=self.ok_button_handler)
-        ok_button.grid(row=1, column=7, sticky="ew")
+        ok_button.grid(row=1, column=7, sticky="ewns")
 
         # Creating Cancel button
         cancel_button = tk.Button(middle_frame, text="Cancel", command=self.cancel_button_handler)
-        cancel_button.grid(row=1, column=8, sticky="ew")
+        cancel_button.grid(row=1, column=8, sticky="ewns")
 
         # bind buttons
-        self.root.bind("<Return>", self.ok_button_handler)
+        self.root.bind("<Control-Return>", self.ok_button_handler)
         self.root.bind("<Escape>", self.cancel_button_handler)
 
     def create_menu(self):
@@ -107,19 +108,19 @@ class ClipApp:
 
         text_path = image_to_text_path(image_path)
         self.text_handler = TextHandler(text_path)
-        self.text_box.delete(0, tk.END)
-        self.text_box.insert(0, self.text_handler.original_text)
+        self.text_box.delete(1.0, tk.END)
+        self.text_box.insert(tk.END, self.text_handler.original_text)
 
     def save_text(self):
         """
         Save the text in the text box to the corresponding text file
         """
-        new_text = self.text_box.get()
-        self.text_handler.save_text(new_text)
+        new_text = self.text_box.get(1.0, tk.END)
+        self.text_handler.save_text(new_text.replace('\n', ''))
 
     def cancel_text(self):
         """
         Cancel any changes made to the text and set it back to the original text
         """
-        self.text_box.delete(0, tk.END)
-        self.text_box.insert(0, self.text_handler.original_text)
+        self.text_box.delete(1.0, tk.END)
+        self.text_box.insert(tk.END, self.text_handler.original_text)
