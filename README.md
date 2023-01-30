@@ -3,6 +3,8 @@
 This app is intended for annotating folders with images for training a generative AI like stable diffusion. It allows 
 you to navigate through the images in a folder, view them, edit and save the captions for each image. 
 
+![Example of the ClipApp interface with an image of a woman dressed in red, dark curly hair and  white background](./docs/UI.jpg)
+
 ## Installation
 
 Clone the repository using the command below (or download the zip file)
@@ -41,16 +43,22 @@ Install the requirements:
 pip install -r requirements.txt
 ```
 
-Building executable using Nuitka
+Building executable using Nuitka (for Windows)
 
 ```bash
 nuitka --standalone --windows-disable-console --enable-plugin=tk-inter --onefile app.py
 ```
 
+Running unit-test, located in ```./tests/``` using pytest:
+
+```bash
+pytest
+```
+
 ## Notes
 
 ClipApp only considers the images with the following extensions: .jpg, .jpeg, .png, .gif and, .bmp.
-ClipApp creates a txt file with the same name of the image, in the same folder where the image is when a caption isn't 
+ClipApp creates an empty txt file with the same name of the image, in the same folder where the image is when a caption isn't 
 available.
 
 ## Contribution
